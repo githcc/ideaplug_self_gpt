@@ -8,14 +8,14 @@
   <name>Ideaplug_self_gpt</name>
 
   <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-  <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+  <vendor email="wyswydx@gmail.com" url="https://119.91.23.137">cc</vendor>
 
   <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
        Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
        Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
   <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
+     An idea plug-in used to assist personal programming, using the gpt interface.<br>
+    <em>power by cc</em>
   ]]></description>
 
   <!-- Product and plugin compatibility requirements.
@@ -25,11 +25,17 @@
   <!-- Extension points defined by the plugin.
        Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
   <extensions defaultExtensionNs="com.intellij">
-
+    <toolWindow factoryClass="com.cc.plug.factory.ChatFactory" id="Gpt" icon="AllIcons.Toolwindows.WebToolWindow"  secondary="true" anchor="right"/>
+    <applicationConfigurable parentId="tools" instance="com.cc.plug.factory.SettingFactory"
+                               id="com.cc.plug.factory.SettingFactory"
+                               displayName="Gpt"/>
+    <applicationConfigurable parentId="com.cc.plug.factory.SettingFactory" instance="com.cc.plug.factory.PromptFactory"
+                               id="com.cc.plug.factory.PromptFactory"
+                               displayName="Prompt"/>
   </extensions>
     <actions>
-        <action id="com.cc.plug.action.TextAction" class="com.cc.plug.action.TextAction" text="ask gpt"
-                description="ask gpt">
+        <action id="com.cc.plug.action.SelectAction" class="com.cc.plug.action.SelectAction" text="Ask Gpt"
+                description="Ask Gpt for help" icon="AllIcons.Toolwindows.WebToolWindow">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
     </actions>

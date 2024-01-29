@@ -11,6 +11,12 @@ repositories {
   mavenCentral()
 }
 
+dependencies {
+    implementation("org.freemarker:freemarker:2.3.31")
+    implementation("com.alibaba:fastjson:2.0.45")
+    implementation("org.springframework:spring-webflux:6.1.3")
+}
+
 // Configure Gradle IntelliJ Plugin
 // Read more: https://plugins.jetbrains.com/docs/intellij/tools-gradle-intellij-plugin.html
 intellij {
