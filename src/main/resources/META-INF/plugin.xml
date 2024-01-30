@@ -29,8 +29,8 @@
     <applicationConfigurable parentId="tools" instance="com.cc.plug.factory.SettingFactory"
                                id="com.cc.plug.factory.SettingFactory"
                                displayName="Gpt"/>
-    <applicationConfigurable parentId="com.cc.plug.factory.SettingFactory" instance="com.cc.plug.factory.PromptFactory"
-                               id="com.cc.plug.factory.PromptFactory"
+    <applicationConfigurable parentId="com.cc.plug.factory.SettingFactory" instance="com.cc.plug.factory.PromptsFactory"
+                               id="com.cc.plug.factory.PromptsFactory"
                                displayName="Prompt"/>
   </extensions>
     <actions>

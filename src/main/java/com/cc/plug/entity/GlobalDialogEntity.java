@@ -1,11 +1,14 @@
 package com.cc.plug.entity;
 
-import java.util.List;
+import java.util.Vector;
+
+import static com.cc.plug.data.F.GlobalDialogEntity_MODEL;
+import static com.cc.plug.data.F.GlobalDialogEntity_STREAM;
 
 public class GlobalDialogEntity {
-    private String model = "gpt-3.5-turbo-1106";
-    private boolean stream = true;
-    private List<DialogEntity> messages;
+    private String model = GlobalDialogEntity_MODEL;
+    private boolean stream = GlobalDialogEntity_STREAM;
+    private Vector<DialogEntity> messages = new Vector<>();
 
     public GlobalDialogEntity() {
     }
@@ -26,11 +29,11 @@ public class GlobalDialogEntity {
         this.stream = stream;
     }
 
-    public List<DialogEntity> getMessages() {
+    public Vector<DialogEntity> getMessages() {
         return messages;
     }
 
-    public void setMessages(List<DialogEntity> messages) {
+    public void setMessages(Vector<DialogEntity> messages) {
         this.messages = messages;
     }
 }

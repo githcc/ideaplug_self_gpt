@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 
-public class PromptFactory implements Configurable, Disposable {
+public class PromptsFactory implements Configurable, Disposable {
     @Override
     public void dispose() {
 

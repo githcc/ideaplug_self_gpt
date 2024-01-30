@@ -5,17 +5,23 @@
     <constraints>
       <xy x="20" y="20" width="500" height="400"/>
     </constraints>
-    <properties/>
-    <border type="none"/>
+    <properties>
+      <foreground color="-13947600"/>
+    </properties>
+    <border type="none">
+      <color color="-13947600"/>
+    </border>
     <children>
       <scrollpane id="b7510">
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-        <border type="none"/>
+        <border type="empty">
+          <color color="-13947600"/>
+        </border>
         <children>
-          <component id="2071f" class="javax.swing.JList" binding="list">
+          <component id="2071f" class="javax.swing.JList" binding="contentList">
             <constraints/>
             <properties>
               <model/>
@@ -29,9 +35,11 @@
           <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
-        <border type="none"/>
+        <border type="empty">
+          <color color="-13947600"/>
+        </border>
         <children>
-          <component id="412ac" class="javax.swing.JTextField" binding="conentText">
+          <component id="412ac" class="javax.swing.JTextField" binding="contentText">
             <constraints>
               <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                 <preferred-size width="150" height="-1"/>
@@ -47,14 +55,12 @@
               <text value="Send"/>
             </properties>
           </component>
-          <component id="14f41" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+          <component id="14f41" class="javax.swing.JComboBox" binding="promptsBox">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <model>
-                <item value="Chat"/>
-              </model>
+              <model/>
             </properties>
           </component>
         </children>

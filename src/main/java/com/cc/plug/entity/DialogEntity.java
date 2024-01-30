@@ -3,7 +3,7 @@ package com.cc.plug.entity;
 
 public class DialogEntity {
     private String role;
-    private String content;
+    private String content="";
 
     public DialogEntity() {
     }
@@ -22,5 +22,10 @@ public class DialogEntity {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return getRole()+":" + getContent();
     }
 }

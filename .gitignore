@@ -1,6 +1,7 @@
 ## directory
 .gradle
 build
+out
 
 ## file
 tmp.md
