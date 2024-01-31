@@ -7,8 +7,7 @@ import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 
-import static com.cc.plug.data.F.ASK_GPT;
-import static com.cc.plug.data.F.ASK_GPT_FOR;
+import static com.cc.plug.data.F.*;
 
 public class SelectAction extends AnAction {
     public static SelectAction selectAction;
@@ -28,7 +27,7 @@ public class SelectAction extends AnAction {
     }
 
     public void setText(String text){
-        if ("Chat".equals(text)){
+        if (GlobalDataEntity_CHAT.equals(text)){
             super.getTemplatePresentation().setText(ASK_GPT);
         }else{
             super.getTemplatePresentation().setText(ASK_GPT_FOR + text);

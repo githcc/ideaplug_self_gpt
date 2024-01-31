@@ -25,11 +25,8 @@ import java.util.*;
 
 public class ChatFactory implements ToolWindowFactory {
     public static ChatWindow chatWindow;
-    public static Project project;
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        // There may be problems caused by the object being empty.
-        this.project = project;
         chatWindow = new ChatWindow(project, toolWindow);
         ContentFactory contentFactory = ContentFactory.getInstance();
         Content content = contentFactory.createContent(chatWindow.getContentPanel(), "", false);
@@ -45,18 +42,14 @@ public class ChatFactory implements ToolWindowFactory {
     }
 
     public static void downloadConversations(){
-        VirtualFile virtualFile = FileChooser.chooseFile(FileChooserDescriptorFactory.createSingleFileDescriptor(), project, project.getBaseDir());
-        if (virtualFile == null){
-            return;
-        }
-        String path = virtualFile.getPath();
-        String fileName = path+ File.separator+UUID.randomUUID()+".md";
+        String path =  System.getProperty("user.home");
+        String fileName = path+File.separator+"Desktop"+File.separator+UUID.randomUUID()+".md";
         Vector<DialogEntity> messages = D.globalDataEntity.getGlobalDialogEntityObject().getMessages();
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
             writer.write("# "+new Date()+ "\n\n\n");
             for (DialogEntity entity : messages) {
-                writer.write(entity.getRole() + ":\n");
-                writer.write(entity.getContent() + "\n\n");
+                writer.write("### " + new String(entity.getRole().getBytes(), "GBK") + ":\n");
+                writer.write(new String(entity.getContent().getBytes(), "GBK")  + "\n\n");
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -12,7 +12,6 @@ repositories {
 }
 
 dependencies {
-    implementation("org.freemarker:freemarker:2.3.31")
     implementation("com.alibaba:fastjson:2.0.45")
     implementation("org.springframework:spring-webflux:6.1.3")
 }

@@ -2,8 +2,8 @@ package com.cc.plug.data;
 
 public class F {
     public final static String GlobalDataEntity_PROXY = "https://api.openai-proxy.com";
-    public final static String GlobalDataEntity_KEY = "Bearer sk-xxx";
-    public final static String GlobalDataEntity_CHAR = "Char";
+    public final static String GlobalDataEntity_KEY = "Bearer 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";
+    public final static String GlobalDataEntity_CHAT = "Chat";
 
     public final static String GlobalDialogEntity_MODEL = "gpt-3.5-turbo-1106";
     public final static int GlobalDataEntity_MAXNUM = 0;

@@ -19,7 +19,7 @@ public class GlobalDataEntity {
 
     private Map<String, String> promptsList;
     private Map<String, String> promptsListBak;
-    private String promptsCheck = GlobalDataEntity_CHAR;
+    private String promptsCheck = GlobalDataEntity_CHAT;
     private DefaultTableModel tableModel = new DefaultTableModel(null, PROMPTS_HEAD) {
         @Override
         public boolean isCellEditable(int row, int column) {
@@ -29,12 +29,12 @@ public class GlobalDataEntity {
 
     public GlobalDataEntity() {
         promptsList = new LinkedHashMap<>();
-        promptsList.put(GlobalDataEntity_CHAR,"");
+        promptsList.put(GlobalDataEntity_CHAT,"");
         promptsList.put("Example","Write a similar example");
         promptsList.put("Explain","Explain this code");
 
         promptsListBak = new LinkedHashMap<>();
-        promptsListBak.put(GlobalDataEntity_CHAR,"");
+        promptsListBak.put(GlobalDataEntity_CHAT,"");
         promptsListBak.put("Example","Write a similar example");
         promptsListBak.put("Explain","Explain this code");
     }
