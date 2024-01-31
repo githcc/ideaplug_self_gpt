@@ -35,7 +35,6 @@ public class ChatFactory implements ToolWindowFactory {
         toolWindow.setTitleActions(actionList);
         toolWindow.getContentManager().addContent(content);
         chatWindow.initPromptsBox();
-        chatWindow.initJList();
     }
 
     public static void downloadConversations(){

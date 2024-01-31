@@ -13,7 +13,6 @@ public class SettingFactory implements Configurable, Disposable {
     SettingWindow settingWindow = new SettingWindow();
     @Override
     public void dispose() {
-
     }
 
     @Override

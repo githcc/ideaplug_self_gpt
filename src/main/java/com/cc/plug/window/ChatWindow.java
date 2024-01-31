@@ -5,6 +5,7 @@ import com.cc.plug.component.ChatComponent;
 import com.cc.plug.data.D;
 import com.cc.plug.entity.DialogEntity;
 import com.cc.plug.entity.GlobalDialogEntity;
+import com.cc.plug.factory.ChatFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.panels.VerticalLayout;
@@ -32,9 +33,15 @@ public class ChatWindow {
     private JComboBox<String> promptsBox;
     private JPanel subChatJPanel = new JPanel(new VerticalLayout(JBUI.scale(8)));
     private JScrollPane chatJScrollPane;
+    private int chatComponentNum = 0;
+    private static int num = 0;
 
-    private int num = 0;
-
+    {
+        if (num++ == 0){
+            chatJScrollPane.setDoubleBuffered(true);
+            chatJScrollPane.setViewportView(subChatJPanel);
+        }
+    }
     public JPanel getChatJPanel() {
         return chatJPanel;
     }
@@ -55,10 +62,14 @@ public class ChatWindow {
         boolean stream = D.globalDataEntity.getGlobalDialogEntityObject().isStream();
 
         CompletableFuture.runAsync(() -> {
-            if (stream){
-                sendStreamGptAndUpdate(D.globalDataEntity);
-            }else{
-                sendNoStreamGptAndUpdate(D.globalDataEntity);
+            try{
+                if (stream){
+                    sendStreamGptAndUpdate(D.globalDataEntity);
+                }else{
+                    sendNoStreamGptAndUpdate(D.globalDataEntity);
+                }
+            }catch (Exception e){
+                e.printStackTrace();
             }
         });
         contentText.setText("");
@@ -71,33 +82,29 @@ public class ChatWindow {
     }
 
     public void cleanJList() {
-        num = 0;
+        chatComponentNum = 0;
         subChatJPanel.removeAll();
         chatJScrollPane.updateUI();
     }
 
     public void addChatMessage(String str, int color, int color_dark){
-        num++;
+        chatComponentNum++;
         subChatJPanel.add(new ChatComponent(convertMarkdownToHtml(str), color, color_dark));
         chatJScrollPane.updateUI();
     }
 
     public void updateChatMessage(String str, int color, int color_dark){
-        subChatJPanel.remove(num-1);
+        subChatJPanel.remove(chatComponentNum -1);
         subChatJPanel.add(new ChatComponent(convertMarkdownToHtml(str), color, color_dark));
         chatJScrollPane.updateUI();
     }
 
     public ChatWindow(Project project, ToolWindow toolWindow) {
-        chatJScrollPane.setDoubleBuffered(true);
-
-        ChatWindow that = this;
-        chatJScrollPane.setViewportView(subChatJPanel);
-        sendButton.addActionListener(e -> that.sendText());
+        sendButton.addActionListener(e -> ChatFactory.chatWindow.sendText());
         contentText.addKeyListener(new KeyAdapter() {
                 @Override public void keyPressed(KeyEvent e) {
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    that.sendText();
+                    ChatFactory.chatWindow.sendText();
                 }
             }
         });
@@ -116,8 +123,5 @@ public class ChatWindow {
             model.addElement(s);
         }
         promptsBox.setModel(model);
-    }
-    public void initJList(){
-
     }
 }

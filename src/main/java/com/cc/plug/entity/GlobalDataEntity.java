@@ -2,12 +2,13 @@ package com.cc.plug.entity;
 
 
 import javax.swing.table.DefaultTableModel;
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 import static com.cc.plug.data.F.*;
 
-public class GlobalDataEntity {
+public class GlobalDataEntity implements Serializable {
     private String proxy = GlobalDataEntity_PROXY;
     private String key = GlobalDataEntity_KEY;
     private int maxNum = GlobalDataEntity_MAXNUM;

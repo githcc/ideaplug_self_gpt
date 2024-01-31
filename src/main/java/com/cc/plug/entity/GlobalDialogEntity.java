@@ -1,11 +1,12 @@
 package com.cc.plug.entity;
 
+import java.io.Serializable;
 import java.util.Vector;
 
 import static com.cc.plug.data.F.GlobalDialogEntity_MODEL;
 import static com.cc.plug.data.F.GlobalDialogEntity_STREAM;
 
-public class GlobalDialogEntity {
+public class GlobalDialogEntity implements Serializable {
     private String model = GlobalDialogEntity_MODEL;
     private boolean stream = GlobalDialogEntity_STREAM;
     private Vector<DialogEntity> messages = new Vector<>();

@@ -5,6 +5,8 @@ import com.intellij.openapi.util.text.StringUtil;
 
 import javax.swing.*;
 
+import static com.cc.plug.util.io.PersistenceUtil.globalToFile;
+
 public class SettingWindow {
     private JTextField proxyText;
     private JTextField keyText;
@@ -12,19 +14,23 @@ public class SettingWindow {
     private JCheckBox sharePromptsCheckBox;
     private JCheckBox shareConversationsCheckBox;
     private JPanel settingJPanel;
+    private static int num = 0 ;
+    {
+        if (num++ == 0){
+            String proxy = D.globalDataEntity.getProxy();
+            String key = D.globalDataEntity.getKey();
+            int maxNum = D.globalDataEntity.getMaxNum();
+            boolean sharePrompts = D.globalDataEntity.isSharePrompts();
+            boolean shareConversations = D.globalDataEntity.isShareConversations();
+            proxyText.setText(proxy);
+            keyText.setText(key);
+            maxNumText.setText(String.valueOf(maxNum));
+            sharePromptsCheckBox.setSelected(sharePrompts);
+            shareConversationsCheckBox.setSelected(shareConversations);
+        }
+    }
 
     public SettingWindow() {
-        String proxy = D.globalDataEntity.getProxy();
-        String key = D.globalDataEntity.getKey();
-        int maxNum = D.globalDataEntity.getMaxNum();
-        boolean sharePrompts = D.globalDataEntity.isSharePrompts();
-        boolean shareConversations = D.globalDataEntity.isShareConversations();
-
-        proxyText.setText(proxy);
-        keyText.setText(key);
-        maxNumText.setText(String.valueOf(maxNum));
-        sharePromptsCheckBox.setSelected(sharePrompts);
-        shareConversationsCheckBox.setSelected(shareConversations);
     }
     public void apply(){
         String proxy = proxyText.getText();
@@ -37,6 +43,7 @@ public class SettingWindow {
         D.globalDataEntity.setMaxNum(maxNum);
         D.globalDataEntity.setSharePrompts(sharePrompts);
         D.globalDataEntity.setShareConversations(shareConversations);
+        globalToFile();
     }
 
     public JPanel getSettingJPanel() {

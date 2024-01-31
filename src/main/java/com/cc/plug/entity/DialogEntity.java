@@ -1,7 +1,9 @@
 package com.cc.plug.entity;
 
 
-public class DialogEntity {
+import java.io.Serializable;
+
+public class DialogEntity implements Serializable {
     private String role;
     private String content="";
 

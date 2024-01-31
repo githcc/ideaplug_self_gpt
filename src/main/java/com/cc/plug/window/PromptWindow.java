@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.cc.plug.data.F.PROMPTS_HEAD;
+import static com.cc.plug.util.io.PersistenceUtil.globalToFile;
 
 public class PromptWindow {
     private JPanel promptJPanel;
@@ -16,11 +17,19 @@ public class PromptWindow {
     private JButton addButton;
     private JTextArea contentText;
     private JButton resetButton;
+    private JPanel tmp2;
+    private JPanel tmp1;
 
-    public PromptWindow() {
+    private static int num = 0;
+
+    {
         promptsTable.setModel(D.globalDataEntity.getTableModel());
         promptsTable.setEnabled(true);
-        loadPrompts(D.globalDataEntity.getPromptsList());
+        if (num++ == 0){
+            loadPrompts(D.globalDataEntity.getPromptsList());
+        }
+    }
+    public PromptWindow() {
         addButton.addActionListener(e -> {
             String name = nameText.getText();
             String content = contentText.getText();
@@ -31,12 +40,14 @@ public class PromptWindow {
 
             nameText.setText("");
             contentText.setText("");
+            globalToFile();
         });
         resetButton.addActionListener(e -> {
             D.globalDataEntity.getPromptsList().clear();
             D.globalDataEntity.getTableModel().setDataVector(null, PROMPTS_HEAD);
             loadPrompts(D.globalDataEntity.getPromptsListBak());
             ChatFactory.chatWindow.initPromptsBox();
+            globalToFile();
         });
     }
 

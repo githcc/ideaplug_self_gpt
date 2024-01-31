@@ -11,9 +11,9 @@ public class F {
     public final static boolean GlobalDialogEntity_SHARE_PROMPTS = false;
     public final static boolean GlobalDialogEntity_SHARE_CONVERSATIONS = false;
 
-    public final static int COLOR_USER = 0x2b2d30;
+    public final static int COLOR_USER = 0xf7f8fa;
     public final static int COLOR_USER_DARK = 0x2b2d30;
-    public final static int COLOR_BOT = 0x1e1f22;
+    public final static int COLOR_BOT = 0xffffff;
     public final static int COLOR_BOT_DARK = 0x1e1f22;
 
     public final static String ROLE_USER = "user";
