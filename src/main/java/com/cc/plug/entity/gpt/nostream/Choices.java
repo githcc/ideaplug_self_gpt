@@ -1,10 +1,11 @@
-package com.cc.plug.entity.gpt;
+package com.cc.plug.entity.gpt.nostream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Choices {
+
     private int index;
-    private Delta delta;
+    private Message message;
     private String logprobs;
     @JsonProperty("finish_reason")
     private String finishReason;
@@ -15,11 +16,11 @@ public class Choices {
     public int getIndex() {
         return this.index;
     }
-    public void setDelta(Delta delta) {
-        this.delta = delta;
+    public void setMessage(Message message) {
+        this.message = message;
     }
-    public Delta getDelta() {
-        return this.delta;
+    public Message getMessage() {
+        return this.message;
     }
     public void setLogprobs(String logprobs) {
         this.logprobs = logprobs;

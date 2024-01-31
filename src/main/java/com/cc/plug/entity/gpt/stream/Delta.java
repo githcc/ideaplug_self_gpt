@@ -1,4 +1,4 @@
-package com.cc.plug.entity.gpt;
+package com.cc.plug.entity.gpt.stream;
 
 public class Delta {
 

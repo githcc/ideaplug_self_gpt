@@ -7,10 +7,7 @@ import com.cc.plug.data.D;
 import com.cc.plug.entity.DialogEntity;
 import com.cc.plug.window.ChatWindow;
 import com.intellij.openapi.actionSystem.AnAction;
-import com.intellij.openapi.fileChooser.FileChooser;
-import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
 import com.intellij.ui.content.Content;
@@ -29,7 +26,7 @@ public class ChatFactory implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         chatWindow = new ChatWindow(project, toolWindow);
         ContentFactory contentFactory = ContentFactory.getInstance();
-        Content content = contentFactory.createContent(chatWindow.getContentPanel(), "", false);
+        Content content = contentFactory.createContent(chatWindow.getChatJPanel(), "", false);
 
         List<AnAction> actionList = new ArrayList<>();
         actionList.add(new CleanAction());

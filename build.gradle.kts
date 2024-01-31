@@ -12,8 +12,9 @@ repositories {
 }
 
 dependencies {
-    implementation("com.alibaba:fastjson:2.0.45")
-    implementation("org.springframework:spring-webflux:6.1.3")
+  implementation("com.alibaba:fastjson:2.0.45")
+  implementation("org.springframework:spring-webflux:6.1.3")
+  implementation("com.vladsch.flexmark:flexmark-all:0.64.8")
 }
 
 // Configure Gradle IntelliJ Plugin

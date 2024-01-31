@@ -1,17 +1,18 @@
-package com.cc.plug.entity.gpt;
+package com.cc.plug.entity.gpt.nostream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public class GptStreamEntity {
+public class GptNoStreamEntity {
     private String id;
     private String object;
     private int created;
     private String model;
+    private List<Choices> choices;
+    private Usage usage;
     @JsonProperty("system_fingerprint")
     private String systemFingerprint;
-    private List<Choices> choices;
 
     public void setId(String id) {
         this.id = id;
@@ -37,16 +38,22 @@ public class GptStreamEntity {
     public String getModel() {
         return this.model;
     }
-    public void setSystemFingerprint(String systemFingerprint) {
-        this.systemFingerprint = systemFingerprint;
-    }
-    public String getSystemFingerprint() {
-        return this.systemFingerprint;
-    }
     public void setChoices(List<Choices> choices) {
         this.choices = choices;
     }
     public List<Choices> getChoices() {
         return this.choices;
+    }
+    public void setUsage(Usage usage) {
+        this.usage = usage;
+    }
+    public Usage getUsage() {
+        return this.usage;
+    }
+    public void setSystemFingerprint(String systemFingerprint) {
+        this.systemFingerprint = systemFingerprint;
+    }
+    public String getSystemFingerprint() {
+        return this.systemFingerprint;
     }
 }

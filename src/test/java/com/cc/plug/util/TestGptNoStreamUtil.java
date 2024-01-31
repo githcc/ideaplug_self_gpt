@@ -4,14 +4,14 @@ import com.cc.plug.data.D;
 import com.cc.plug.entity.DialogEntity;
 import com.cc.plug.entity.GlobalDialogEntity;
 import com.cc.plug.util.convert.GlobalDialogUtil;
-import com.cc.plug.util.convert.GptStreamUtil;
+import com.cc.plug.util.convert.GptNoStreamUtil;
 import org.junit.Test;
-import reactor.core.publisher.Flux;
+
 import java.util.Vector;
 
-public class TestGptStreamUtil {
+public class TestGptNoStreamUtil {
     @Test
-    public void t() throws InterruptedException {
+    public void t() {
         GlobalDialogEntity globalDialogEntity = new GlobalDialogEntity();
         Vector<DialogEntity> dialogEntities = new Vector<>();
         DialogEntity dialogEntity = new DialogEntity();
@@ -24,22 +24,8 @@ public class TestGptStreamUtil {
         D.globalDataEntity.setGlobalDialogEntityObject(globalDialogEntity);
         D.globalDataEntity.setGlobalDialogText(str);
 
-        // Test Web Flux Stream
-        Flux<String> send = WebGptUtil.sendStream(D.globalDataEntity);
-        send.subscribe(data -> {
-            if ("[DONE]".equals(data) || data == null){
-                return;
-            }
-            String content;
-            try{
-                content = GptStreamUtil.toObj(data).getChoices().get(0).getDelta().getContent();
-            }catch (Exception e){
-                content = data;
-            }
-            if (content == null)return;
-            System.out.printf(content);
-        });
-
-        Thread.sleep(20000);
+        // Test Web Flux No Stream
+        String data = WebGptUtil.sendNoStream(D.globalDataEntity);
+        System.out.println(GptNoStreamUtil.toObj(data).getChoices().get(0).getMessage().getContent());
     }
 }

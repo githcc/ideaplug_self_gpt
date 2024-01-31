@@ -1,7 +1,7 @@
 package com.cc.plug.util.convert;
 
 import com.alibaba.fastjson2.JSON;
-import com.cc.plug.entity.gpt.GptStreamEntity;
+import com.cc.plug.entity.gpt.stream.GptStreamEntity;
 
 public class GptStreamUtil {
     private GptStreamUtil(){
