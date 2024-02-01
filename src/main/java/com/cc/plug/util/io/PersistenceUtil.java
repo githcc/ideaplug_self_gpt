@@ -8,6 +8,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
+import static com.cc.plug.data.F.GlobalDataEntity_CHAT;
+
 public class PersistenceUtil {
     private static final String fileName = "gpt_data.bin";
     public static void globalToFile(){
@@ -19,13 +21,14 @@ public class PersistenceUtil {
                 e.printStackTrace();
             }
         });
-
     }
 
     public static GlobalDataEntity globalToObj(){
         if (isFileExists()){
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-                return (GlobalDataEntity) ois.readObject();
+                GlobalDataEntity globalDataEntity = (GlobalDataEntity) ois.readObject();
+                globalDataEntity.setPromptsCheck(GlobalDataEntity_CHAT);
+                return globalDataEntity;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }

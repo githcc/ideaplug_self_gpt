@@ -7,7 +7,7 @@ public class F {
 
     public final static String GlobalDialogEntity_MODEL = "gpt-3.5-turbo-1106";
     public final static int GlobalDataEntity_MAXNUM = 0;
-    public final static boolean GlobalDialogEntity_STREAM= true;
+    public final static boolean GlobalDialogEntity_STREAM = true;
     public final static boolean GlobalDialogEntity_SHARE_PROMPTS = false;
     public final static boolean GlobalDialogEntity_SHARE_CONVERSATIONS = false;
 

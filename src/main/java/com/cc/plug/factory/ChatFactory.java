@@ -21,10 +21,9 @@ import java.io.IOException;
 import java.util.*;
 
 public class ChatFactory implements ToolWindowFactory {
-    public static ChatWindow chatWindow;
+    public static ChatWindow chatWindow = new ChatWindow();
     @Override
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
-        chatWindow = new ChatWindow(project, toolWindow);
         ContentFactory contentFactory = ContentFactory.getInstance();
         Content content = contentFactory.createContent(chatWindow.getChatJPanel(), "", false);
 
@@ -34,7 +33,6 @@ public class ChatFactory implements ToolWindowFactory {
         actionList.add(new SettingAction());
         toolWindow.setTitleActions(actionList);
         toolWindow.getContentManager().addContent(content);
-        chatWindow.initPromptsBox();
     }
 
     public static void downloadConversations(){

@@ -6,7 +6,6 @@ import com.cc.plug.entity.GlobalDialogEntity;
 import com.cc.plug.util.convert.GlobalDialogUtil;
 import org.junit.Test;
 import reactor.core.publisher.Flux;
-
 import java.util.Vector;
 
 public class TestWebGptUtil {
@@ -29,7 +28,6 @@ public class TestWebGptUtil {
         send.subscribe(System.out::println);
         Thread.sleep(20000);
     }
-
 
     @Test
     public void tNoStream() {

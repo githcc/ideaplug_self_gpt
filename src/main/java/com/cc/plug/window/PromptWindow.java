@@ -17,8 +17,6 @@ public class PromptWindow {
     private JButton addButton;
     private JTextArea contentText;
     private JButton resetButton;
-    private JPanel tmp2;
-    private JPanel tmp1;
 
     private static int num = 0;
 
@@ -29,6 +27,11 @@ public class PromptWindow {
             loadPrompts(D.globalDataEntity.getPromptsList());
         }
     }
+
+    public JPanel getPromptJPanel() {
+        return promptJPanel;
+    }
+
     public PromptWindow() {
         addButton.addActionListener(e -> {
             String name = nameText.getText();
@@ -42,6 +45,7 @@ public class PromptWindow {
             contentText.setText("");
             globalToFile();
         });
+
         resetButton.addActionListener(e -> {
             D.globalDataEntity.getPromptsList().clear();
             D.tableModel.setDataVector(null, PROMPTS_HEAD);
@@ -49,10 +53,6 @@ public class PromptWindow {
             ChatFactory.chatWindow.initPromptsBox();
             globalToFile();
         });
-    }
-
-    public JPanel getPromptJPanel() {
-        return promptJPanel;
     }
 
     private void loadPrompts(Map<String, String> promptsMap){

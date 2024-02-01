@@ -3,6 +3,9 @@ package com.cc.plug.util;
 import com.cc.plug.data.D;
 import com.cc.plug.entity.DialogEntity;
 import com.cc.plug.entity.GlobalDataEntity;
+import com.cc.plug.entity.gpt.stream.Choices;
+import com.cc.plug.entity.gpt.stream.Delta;
+import com.cc.plug.entity.gpt.stream.GptStreamEntity;
 import com.cc.plug.factory.ChatFactory;
 import com.cc.plug.util.convert.GptNoStreamUtil;
 import com.cc.plug.util.convert.GptStreamUtil;
@@ -14,9 +17,11 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.cc.plug.data.F.*;
+import static com.cc.plug.util.convert.GptStreamUtil.toStr;
 
 public class WebGptUtil {
     private WebGptUtil(){
@@ -40,7 +45,16 @@ public class WebGptUtil {
                     ApplicationManager.getApplication().invokeLater(() -> {
                         MessageDialogBuilder.yesNo("Network Error", "Please check proxy or key.").show();
                     });
-                    return Flux.just("Network Error");
+                    Delta delta = new Delta();
+                    delta.setContent("Network Error");
+                    Choices choices = new Choices();
+                    choices.setDelta(delta);
+                    List<Choices> choicesList = new ArrayList<>();
+                    choicesList.add(choices);
+                    GptStreamEntity gptStreamEntity = new GptStreamEntity();
+                    gptStreamEntity.setChoices(choicesList);
+
+                    return Flux.just(toStr(gptStreamEntity));
                 });
     }
 

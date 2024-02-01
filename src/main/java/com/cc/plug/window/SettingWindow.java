@@ -8,30 +8,31 @@ import javax.swing.*;
 import static com.cc.plug.util.io.PersistenceUtil.globalToFile;
 
 public class SettingWindow {
+    private JPanel settingJPanel;
     private JTextField proxyText;
     private JTextField keyText;
     private JTextField maxNumText;
     private JCheckBox sharePromptsCheckBox;
     private JCheckBox shareConversationsCheckBox;
-    private JPanel settingJPanel;
     private static int num = 0 ;
+
     {
         if (num++ == 0){
-            String proxy = D.globalDataEntity.getProxy();
-            String key = D.globalDataEntity.getKey();
-            int maxNum = D.globalDataEntity.getMaxNum();
-            boolean sharePrompts = D.globalDataEntity.isSharePrompts();
-            boolean shareConversations = D.globalDataEntity.isShareConversations();
-            proxyText.setText(proxy);
-            keyText.setText(key);
-            maxNumText.setText(String.valueOf(maxNum));
-            sharePromptsCheckBox.setSelected(sharePrompts);
-            shareConversationsCheckBox.setSelected(shareConversations);
+            proxyText.setText(D.globalDataEntity.getProxy());
+            keyText.setText(D.globalDataEntity.getKey());
+            maxNumText.setText(String.valueOf(D.globalDataEntity.getMaxNum()));
+            sharePromptsCheckBox.setSelected(D.globalDataEntity.isSharePrompts());
+            shareConversationsCheckBox.setSelected(D.globalDataEntity.isShareConversations());
         }
     }
 
     public SettingWindow() {
     }
+
+    public JPanel getSettingJPanel() {
+        return settingJPanel;
+    }
+
     public void apply(){
         String proxy = proxyText.getText();
         String key = keyText.getText();
@@ -44,10 +45,6 @@ public class SettingWindow {
         D.globalDataEntity.setSharePrompts(sharePrompts);
         D.globalDataEntity.setShareConversations(shareConversations);
         globalToFile();
-    }
-
-    public JPanel getSettingJPanel() {
-        return settingJPanel;
     }
 
     public boolean isModified() {

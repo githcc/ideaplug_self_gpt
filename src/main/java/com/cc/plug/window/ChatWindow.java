@@ -6,11 +6,10 @@ import com.cc.plug.data.D;
 import com.cc.plug.entity.DialogEntity;
 import com.cc.plug.entity.GlobalDialogEntity;
 import com.cc.plug.factory.ChatFactory;
-import com.intellij.openapi.project.Project;
-import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.ui.components.panels.VerticalLayout;
 import com.intellij.util.ui.JBUI;
 
+import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Map;
@@ -24,20 +23,19 @@ import static com.cc.plug.util.WebGptUtil.sendStreamGptAndUpdate;
 import static com.cc.plug.util.convert.GlobalDialogUtil.toStr;
 import static com.cc.plug.util.markdownUtil.convertMarkdownToHtml;
 
-import javax.swing.*;
-
 public class ChatWindow {
     private JPanel chatJPanel;
-    private JTextField contentText;
-    private JButton sendButton;
-    private JComboBox<String> promptsBox;
     private JPanel subChatJPanel = new JPanel(new VerticalLayout(JBUI.scale(8)));
     private JScrollPane chatJScrollPane;
+    private JComboBox<String> promptsBox;
+    private JTextField contentText;
+    private JButton sendButton;
     private int chatComponentNum = 0;
     private static int num = 0;
 
     {
         if (num++ == 0){
+            initPromptsBox();
             chatJScrollPane.setDoubleBuffered(true);
             chatJScrollPane.setViewportView(subChatJPanel);
         }
@@ -95,7 +93,7 @@ public class ChatWindow {
         chatJScrollPane.updateUI();
     }
 
-    public ChatWindow(Project project, ToolWindow toolWindow) {
+    public ChatWindow() {
         sendButton.addActionListener(e -> ChatFactory.chatWindow.sendText());
         contentText.addKeyListener(new KeyAdapter() {
                 @Override public void keyPressed(KeyEvent e) {
