@@ -7,6 +7,7 @@ import com.cc.plug.entity.GlobalDataEntity;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 
 import static com.cc.plug.data.F.PERSISTENCE_FILE_NAME;
@@ -29,6 +30,7 @@ public class PersistenceUtil {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
                 GlobalDataEntity globalDataEntity = (GlobalDataEntity) ois.readObject();
                 SelectAction.selectAction.setText(globalDataEntity.getPromptsCheck());
+                globalDataEntity.getGlobalDialogEntityObject().setMessages(new Vector<>());
                 return globalDataEntity;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

@@ -10,6 +10,7 @@ import com.intellij.ui.components.panels.VerticalLayout;
 import com.intellij.util.ui.JBUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Map;
@@ -18,15 +19,15 @@ import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 
 import static com.cc.plug.data.F.*;
+import static com.cc.plug.util.MarkdownUtil.convertMarkdownToHtml;
 import static com.cc.plug.util.WebGptUtil.sendNoStreamGptAndUpdate;
 import static com.cc.plug.util.WebGptUtil.sendStreamGptAndUpdate;
 import static com.cc.plug.util.convert.GlobalDialogUtil.toStr;
-import static com.cc.plug.util.MarkdownUtil.convertMarkdownToHtml;
 
 public class ChatWindow {
     private JPanel chatJPanel;
-    private JPanel subChatJPanel = new JPanel(new VerticalLayout(JBUI.scale(8)));
     private JScrollPane chatJScrollPane;
+    private JPanel subChatJPanel = new JPanel(new VerticalLayout(JBUI.scale(8)));
     private JComboBox<String> promptsBox;
     private JTextField contentText;
     private JButton sendButton;
@@ -36,8 +37,8 @@ public class ChatWindow {
     {
         if (num++ == 0){
             initPromptsBox();
-            initChatMessage();
             chatJScrollPane.setDoubleBuffered(true);
+            subChatJPanel.setPreferredSize(new Dimension(300, 6000));
             chatJScrollPane.setViewportView(subChatJPanel);
             promptsBox.setSelectedItem(D.globalDataEntity.getPromptsCheck());
         }
@@ -119,17 +120,5 @@ public class ChatWindow {
             model.addElement(s);
         }
         promptsBox.setModel(model);
-    }
-
-    public void initChatMessage(){
-        Vector<DialogEntity> messages = D.globalDataEntity.getGlobalDialogEntityObject().getMessages();
-        for (DialogEntity message : messages) {
-            if (ROLE_USER.equals(message.getRole().trim())){
-                subChatJPanel.add(new ChatComponent(convertMarkdownToHtml(message.getContent()), COLOR_USER, COLOR_USER_DARK));
-            }else{
-                subChatJPanel.add(new ChatComponent(convertMarkdownToHtml(message.getContent()), COLOR_BOT, COLOR_BOT_DARK));
-            }
-        }
-        chatJScrollPane.updateUI();
     }
 }

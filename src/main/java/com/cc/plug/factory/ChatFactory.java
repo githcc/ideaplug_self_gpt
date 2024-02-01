@@ -2,6 +2,7 @@ package com.cc.plug.factory;
 
 import com.cc.plug.action.CleanAction;
 import com.cc.plug.action.DownloadAction;
+import com.cc.plug.action.GitHubAction;
 import com.cc.plug.action.SettingAction;
 import com.cc.plug.data.D;
 import com.cc.plug.entity.DialogEntity;
@@ -31,6 +32,7 @@ public class ChatFactory implements ToolWindowFactory {
         actionList.add(new CleanAction());
         actionList.add(new DownloadAction());
         actionList.add(new SettingAction());
+        actionList.add(new GitHubAction());
         toolWindow.setTitleActions(actionList);
         toolWindow.getContentManager().addContent(content);
     }
