@@ -21,7 +21,7 @@ import static com.cc.plug.data.F.*;
 import static com.cc.plug.util.WebGptUtil.sendNoStreamGptAndUpdate;
 import static com.cc.plug.util.WebGptUtil.sendStreamGptAndUpdate;
 import static com.cc.plug.util.convert.GlobalDialogUtil.toStr;
-import static com.cc.plug.util.markdownUtil.convertMarkdownToHtml;
+import static com.cc.plug.util.MarkdownUtil.convertMarkdownToHtml;
 
 public class ChatWindow {
     private JPanel chatJPanel;
@@ -36,12 +36,30 @@ public class ChatWindow {
     {
         if (num++ == 0){
             initPromptsBox();
+            initChatMessage();
             chatJScrollPane.setDoubleBuffered(true);
             chatJScrollPane.setViewportView(subChatJPanel);
+            promptsBox.setSelectedItem(D.globalDataEntity.getPromptsCheck());
         }
     }
     public JPanel getChatJPanel() {
         return chatJPanel;
+    }
+
+    public ChatWindow() {
+        sendButton.addActionListener(e -> ChatFactory.chatWindow.sendText());
+        contentText.addKeyListener(new KeyAdapter() {
+            @Override public void keyPressed(KeyEvent e) {
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    ChatFactory.chatWindow.sendText();
+                }
+            }
+        });
+        promptsBox.addActionListener(e -> {
+            String check = (String) promptsBox.getSelectedItem();
+            D.globalDataEntity.setPromptsCheck(check);
+            SelectAction.selectAction.setText(check);
+        });
     }
 
     public void sendGpt(String text){
@@ -93,22 +111,6 @@ public class ChatWindow {
         chatJScrollPane.updateUI();
     }
 
-    public ChatWindow() {
-        sendButton.addActionListener(e -> ChatFactory.chatWindow.sendText());
-        contentText.addKeyListener(new KeyAdapter() {
-                @Override public void keyPressed(KeyEvent e) {
-                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
-                    ChatFactory.chatWindow.sendText();
-                }
-            }
-        });
-        promptsBox.addActionListener(e -> {
-            String check = (String) promptsBox.getSelectedItem();
-            D.globalDataEntity.setPromptsCheck(check);
-            SelectAction.selectAction.setText(check);
-        });
-    }
-
     public void initPromptsBox(){
         DefaultComboBoxModel<String> model = new DefaultComboBoxModel<>();
         Map<String, String> promptsMap = D.globalDataEntity.getPromptsList();
@@ -117,5 +119,17 @@ public class ChatWindow {
             model.addElement(s);
         }
         promptsBox.setModel(model);
+    }
+
+    public void initChatMessage(){
+        Vector<DialogEntity> messages = D.globalDataEntity.getGlobalDialogEntityObject().getMessages();
+        for (DialogEntity message : messages) {
+            if (ROLE_USER.equals(message.getRole().trim())){
+                subChatJPanel.add(new ChatComponent(convertMarkdownToHtml(message.getContent()), COLOR_USER, COLOR_USER_DARK));
+            }else{
+                subChatJPanel.add(new ChatComponent(convertMarkdownToHtml(message.getContent()), COLOR_BOT, COLOR_BOT_DARK));
+            }
+        }
+        chatJScrollPane.updateUI();
     }
 }

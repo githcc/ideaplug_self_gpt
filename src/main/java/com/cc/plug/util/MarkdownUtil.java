@@ -15,7 +15,7 @@ import com.vladsch.flexmark.util.data.MutableDataSet;
 
 import java.util.Arrays;
 
-public class markdownUtil {
+public class MarkdownUtil {
     public static String convertMarkdownToHtml(String markdown) {
         MutableDataSet options = new MutableDataSet();
         options.set(Parser.EXTENSIONS, Arrays.asList(

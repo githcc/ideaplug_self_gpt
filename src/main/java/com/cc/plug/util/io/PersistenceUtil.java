@@ -1,5 +1,6 @@
 package com.cc.plug.util.io;
 
+import com.cc.plug.action.SelectAction;
 import com.cc.plug.data.D;
 import com.cc.plug.entity.GlobalDataEntity;
 
@@ -8,10 +9,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.concurrent.CompletableFuture;
 
-import static com.cc.plug.data.F.GlobalDataEntity_CHAT;
+import static com.cc.plug.data.F.PERSISTENCE_FILE_NAME;
 
 public class PersistenceUtil {
-    private static final String fileName = "gpt_data.bin";
+    private static final String fileName = PERSISTENCE_FILE_NAME;
     public static void globalToFile(){
         removeFile();
         CompletableFuture.runAsync(() -> {
@@ -27,7 +28,7 @@ public class PersistenceUtil {
         if (isFileExists()){
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
                 GlobalDataEntity globalDataEntity = (GlobalDataEntity) ois.readObject();
-                globalDataEntity.setPromptsCheck(GlobalDataEntity_CHAT);
+                SelectAction.selectAction.setText(globalDataEntity.getPromptsCheck());
                 return globalDataEntity;
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();

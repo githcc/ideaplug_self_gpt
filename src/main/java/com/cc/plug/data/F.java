@@ -12,14 +12,15 @@ public class F {
     public final static boolean GlobalDialogEntity_SHARE_CONVERSATIONS = false;
 
     public final static int COLOR_USER = 0xf7f8fa;
-    public final static int COLOR_USER_DARK = 0x2b2d30;
+    public final static int COLOR_USER_DARK = 0x1e1f22;
     public final static int COLOR_BOT = 0xffffff;
-    public final static int COLOR_BOT_DARK = 0x1e1f22;
+    public final static int COLOR_BOT_DARK = 0x2b2d30;
 
     public final static String ROLE_USER = "user";
     public final static String ROLE_BOT = "assistant";
 
     public final static String ASK_GPT = "Ask Gpt";
     public final static String ASK_GPT_FOR = "Ask Gpt For ";
+    public final static String PERSISTENCE_FILE_NAME = "gpt_data.bin";
     public final static String[] PROMPTS_HEAD = {"name", "prompts"};
 }
