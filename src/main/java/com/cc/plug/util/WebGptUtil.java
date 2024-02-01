@@ -6,6 +6,8 @@ import com.cc.plug.entity.GlobalDataEntity;
 import com.cc.plug.factory.ChatFactory;
 import com.cc.plug.util.convert.GptNoStreamUtil;
 import com.cc.plug.util.convert.GptStreamUtil;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.ui.MessageDialogBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -33,7 +35,13 @@ public class WebGptUtil {
                 .header(HttpHeaders.AUTHORIZATION, key)
                 .body(BodyInserters.fromValue(requestBody))
                 .retrieve()
-                .bodyToFlux(String.class);
+                .bodyToFlux(String.class)
+                .onErrorResume(Exception.class, ex -> {
+                    ApplicationManager.getApplication().invokeLater(() -> {
+                        MessageDialogBuilder.yesNo("Network Error", "Please check proxy or key.").show();
+                    });
+                    return Flux.just("Network Error");
+                });
     }
 
 
@@ -42,15 +50,20 @@ public class WebGptUtil {
         String key = globalDataEntity.getKey();
         String requestBody = globalDataEntity.getGlobalDialogText();
         WebClient webClient = WebClient.create(proxy+"/v1/chat");
-
-        // Initiate an asynchronous POST request and obtain a Flux representation of the response body
-        return webClient.post()
-                .uri("/completions")
-                .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .header(HttpHeaders.AUTHORIZATION, key)
-                .body(BodyInserters.fromValue(requestBody))
-                .retrieve()
-                .bodyToMono(String.class).block();
+        try{
+            return webClient.post()
+                    .uri("/completions")
+                    .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                    .header(HttpHeaders.AUTHORIZATION, key)
+                    .body(BodyInserters.fromValue(requestBody))
+                    .retrieve()
+                    .bodyToMono(String.class).block();
+        }catch (Exception e){
+            ApplicationManager.getApplication().invokeLater(() -> {
+                MessageDialogBuilder.yesNo("Network Error", "Please check proxy or key.").show();
+            });
+        }
+        return "Network Error";
     }
 
     public static void sendStreamGptAndUpdate(GlobalDataEntity globalDataEntity){

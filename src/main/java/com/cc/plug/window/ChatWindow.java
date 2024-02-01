@@ -62,14 +62,10 @@ public class ChatWindow {
         boolean stream = D.globalDataEntity.getGlobalDialogEntityObject().isStream();
 
         CompletableFuture.runAsync(() -> {
-            try{
-                if (stream){
-                    sendStreamGptAndUpdate(D.globalDataEntity);
-                }else{
-                    sendNoStreamGptAndUpdate(D.globalDataEntity);
-                }
-            }catch (Exception e){
-                e.printStackTrace();
+            if (stream){
+                sendStreamGptAndUpdate(D.globalDataEntity);
+            }else{
+                sendNoStreamGptAndUpdate(D.globalDataEntity);
             }
         });
         contentText.setText("");

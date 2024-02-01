@@ -23,7 +23,7 @@ public class PromptWindow {
     private static int num = 0;
 
     {
-        promptsTable.setModel(D.globalDataEntity.getTableModel());
+        promptsTable.setModel(D.tableModel);
         promptsTable.setEnabled(true);
         if (num++ == 0){
             loadPrompts(D.globalDataEntity.getPromptsList());
@@ -35,7 +35,7 @@ public class PromptWindow {
             String content = contentText.getText();
             if (name == null || content == null || name.trim().isEmpty() || content.trim().isEmpty()) return;
             D.globalDataEntity.getPromptsList().put(name, content);
-            D.globalDataEntity.getTableModel().addRow(new Object[]{name, content});
+            D.tableModel.addRow(new Object[]{name, content});
             ChatFactory.chatWindow.initPromptsBox();
 
             nameText.setText("");
@@ -44,7 +44,7 @@ public class PromptWindow {
         });
         resetButton.addActionListener(e -> {
             D.globalDataEntity.getPromptsList().clear();
-            D.globalDataEntity.getTableModel().setDataVector(null, PROMPTS_HEAD);
+            D.tableModel.setDataVector(null, PROMPTS_HEAD);
             loadPrompts(D.globalDataEntity.getPromptsListBak());
             ChatFactory.chatWindow.initPromptsBox();
             globalToFile();
@@ -58,7 +58,7 @@ public class PromptWindow {
     private void loadPrompts(Map<String, String> promptsMap){
         Set<String> setPrompts = promptsMap.keySet();
         for (String key : setPrompts) {
-            D.globalDataEntity.getTableModel().addRow(new Object[]{key, promptsMap.get(key)});
+            D.tableModel.addRow(new Object[]{key, promptsMap.get(key)});
         }
     }
 }

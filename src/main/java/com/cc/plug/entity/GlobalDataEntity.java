@@ -1,7 +1,6 @@
 package com.cc.plug.entity;
 
 
-import javax.swing.table.DefaultTableModel;
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,12 +20,6 @@ public class GlobalDataEntity implements Serializable {
     private Map<String, String> promptsList;
     private Map<String, String> promptsListBak;
     private String promptsCheck = GlobalDataEntity_CHAT;
-    private DefaultTableModel tableModel = new DefaultTableModel(null, PROMPTS_HEAD) {
-        @Override
-        public boolean isCellEditable(int row, int column) {
-            return false;
-        }
-    };
 
     public GlobalDataEntity() {
         promptsList = new LinkedHashMap<>();
@@ -110,14 +103,6 @@ public class GlobalDataEntity implements Serializable {
 
     public void setPromptsList(Map<String, String> promptsList) {
         this.promptsList = promptsList;
-    }
-
-    public DefaultTableModel getTableModel() {
-        return tableModel;
-    }
-
-    public void setTableModel(DefaultTableModel tableModel) {
-        this.tableModel = tableModel;
     }
 
     public String getPromptsCheck() {

@@ -10,8 +10,8 @@ import com.intellij.openapi.editor.SelectionModel;
 import static com.cc.plug.data.F.*;
 
 public class SelectAction extends AnAction {
-    public static SelectAction selectAction;
-    public SelectAction() {
+    public static SelectAction selectAction = new SelectAction();
+    private SelectAction() {
         selectAction = this;
     }
 
