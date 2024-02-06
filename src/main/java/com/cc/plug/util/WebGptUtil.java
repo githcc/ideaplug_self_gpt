@@ -3,13 +3,12 @@ package com.cc.plug.util;
 import com.cc.plug.data.D;
 import com.cc.plug.entity.DialogEntity;
 import com.cc.plug.entity.GlobalDataEntity;
-import com.cc.plug.entity.gpt.stream.Choices;
-import com.cc.plug.entity.gpt.stream.Delta;
-import com.cc.plug.entity.gpt.stream.GptStreamEntity;
 import com.cc.plug.factory.ChatFactory;
+import com.cc.plug.factory.SettingFactory;
 import com.cc.plug.util.convert.GptNoStreamUtil;
 import com.cc.plug.util.convert.GptStreamUtil;
 import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.options.ShowSettingsUtil;
 import com.intellij.openapi.ui.MessageDialogBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -17,11 +16,9 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.cc.plug.data.F.*;
-import static com.cc.plug.util.convert.GptStreamUtil.toStr;
 
 public class WebGptUtil {
     private WebGptUtil(){
@@ -43,18 +40,12 @@ public class WebGptUtil {
                 .bodyToFlux(String.class)
                 .onErrorResume(Exception.class, ex -> {
                     ApplicationManager.getApplication().invokeLater(() -> {
-                        MessageDialogBuilder.yesNo("Network Error", "Please check proxy or key.").show();
+                        int flag = MessageDialogBuilder.yesNo("Network Error", "Please check proxy or key.").show();
+                        if (flag == 0){
+                            ShowSettingsUtil.getInstance().showSettingsDialog(null, SettingFactory.class);
+                        }
                     });
-                    Delta delta = new Delta();
-                    delta.setContent("Network Error");
-                    Choices choices = new Choices();
-                    choices.setDelta(delta);
-                    List<Choices> choicesList = new ArrayList<>();
-                    choicesList.add(choices);
-                    GptStreamEntity gptStreamEntity = new GptStreamEntity();
-                    gptStreamEntity.setChoices(choicesList);
-
-                    return Flux.just(toStr(gptStreamEntity));
+                    return Flux.just("Network Error");
                 });
     }
 
@@ -74,7 +65,10 @@ public class WebGptUtil {
                     .bodyToMono(String.class).block();
         }catch (Exception e){
             ApplicationManager.getApplication().invokeLater(() -> {
-                MessageDialogBuilder.yesNo("Network Error", "Please check proxy or key.").show();
+                int flag = MessageDialogBuilder.yesNo("Network Error", "Please check proxy or key.").show();
+                if (flag == 0){
+                    ShowSettingsUtil.getInstance().showSettingsDialog(null, SettingFactory.class);
+                }
             });
         }
         return "Network Error";
@@ -89,6 +83,8 @@ public class WebGptUtil {
         send.subscribe(data -> {
             if ("[DONE]".equals(data) || data == null){
                 return;
+            }else if ("Network Error".equals(data)){
+                ChatFactory.chatWindow.addChatMessage(data, COLOR_BOT, COLOR_BOT_DARK);
             }
             String content;
             try{
@@ -106,6 +102,10 @@ public class WebGptUtil {
     }
     public static void sendNoStreamGptAndUpdate(GlobalDataEntity globalDataEntity){
         String data = WebGptUtil.sendNoStream(globalDataEntity);
+        if ("Network Error".equals(data)){
+            ChatFactory.chatWindow.addChatMessage(data, COLOR_BOT, COLOR_BOT_DARK);
+            return;
+        }
         String content = GptNoStreamUtil.toObj(data).getChoices().get(0).getMessage().getContent();
         List<DialogEntity> messages = D.globalDataEntity.getGlobalDialogEntityObject().getMessages();
         DialogEntity dialogEntity = new DialogEntity();
