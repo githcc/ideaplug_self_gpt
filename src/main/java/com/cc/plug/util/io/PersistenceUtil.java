@@ -7,7 +7,6 @@ import com.cc.plug.entity.GlobalDataEntity;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Vector;
 import java.util.concurrent.CompletableFuture;
 
 import static com.cc.plug.data.F.PERSISTENCE_FILE_NAME;
@@ -28,10 +27,9 @@ public class PersistenceUtil {
     public static GlobalDataEntity globalToObj(){
         if (isFileExists()){
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName))) {
-                GlobalDataEntity globalDataEntity = (GlobalDataEntity) ois.readObject();
-                SelectAction.selectAction.setText(globalDataEntity.getPromptsCheck());
-                globalDataEntity.getGlobalDialogEntityObject().setMessages(new Vector<>());
-                return globalDataEntity;
+                GlobalDataEntity globalDataEntityFile = (GlobalDataEntity) ois.readObject();
+                SelectAction.selectAction.setText(globalDataEntityFile.getPromptsCheck());
+                return copyGlobalDataEntity(globalDataEntityFile);
             } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -47,5 +45,18 @@ public class PersistenceUtil {
         if (isFileExists()){
             new File(fileName).delete();
         }
+    }
+
+    private static GlobalDataEntity copyGlobalDataEntity(GlobalDataEntity globalDataEntity){
+        GlobalDataEntity dataEntity = new GlobalDataEntity();
+        dataEntity.setPromptsCheck(globalDataEntity.getPromptsCheck());
+        dataEntity.setKey(globalDataEntity.getKey());
+        dataEntity.setSharePrompts(globalDataEntity.isSharePrompts());
+        dataEntity.setShareConversations(globalDataEntity.isShareConversations());
+
+        dataEntity.setPromptsList(globalDataEntity.getPromptsList());
+        dataEntity.setPromptsListBak(globalDataEntity.getPromptsListBak());
+        dataEntity.setPromptsCheck(globalDataEntity.getPromptsCheck());
+        return dataEntity;
     }
 }

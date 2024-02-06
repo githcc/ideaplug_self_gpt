@@ -32,22 +32,16 @@ public class ChatWindow {
     private JTextField contentText;
     private JButton sendButton;
     private int chatComponentNum = 0;
-    private static int num = 0;
-
-    {
-        if (num++ == 0){
-            initPromptsBox();
-            chatJScrollPane.setDoubleBuffered(true);
-            subChatJPanel.setPreferredSize(new Dimension(300, 6000));
-            chatJScrollPane.setViewportView(subChatJPanel);
-            promptsBox.setSelectedItem(D.globalDataEntity.getPromptsCheck());
-        }
-    }
     public JPanel getChatJPanel() {
         return chatJPanel;
     }
 
     public ChatWindow() {
+        initPromptsBox();
+        chatJScrollPane.setDoubleBuffered(true);
+        subChatJPanel.setPreferredSize(new Dimension(300, 6000));
+        chatJScrollPane.setViewportView(subChatJPanel);
+        promptsBox.setSelectedItem(D.globalDataEntity.getPromptsCheck());
         sendButton.addActionListener(e -> ChatFactory.chatWindow.sendText());
         contentText.addKeyListener(new KeyAdapter() {
             @Override public void keyPressed(KeyEvent e) {

@@ -10,27 +10,21 @@ import static com.cc.plug.data.F.*;
 public class GlobalDataEntity implements Serializable {
     private String proxy = GlobalDataEntity_PROXY;
     private String key = GlobalDataEntity_KEY;
-    private int maxNum = GlobalDataEntity_MAXNUM;
     private String dialog;
     private String globalDialogText;
     private boolean sharePrompts = GlobalDialogEntity_SHARE_PROMPTS;
     private boolean shareConversations = GlobalDialogEntity_SHARE_CONVERSATIONS;
     private GlobalDialogEntity globalDialogEntityObject = new GlobalDialogEntity();
 
-    private Map<String, String> promptsList;
-    private Map<String, String> promptsListBak;
+    private Map<String, String> promptsList = new LinkedHashMap<>();
+    private Map<String, String> promptsListBak = new LinkedHashMap<>();
     private String promptsCheck = GlobalDataEntity_CHAT;
 
     public GlobalDataEntity() {
-        promptsList = new LinkedHashMap<>();
         promptsList.put(GlobalDataEntity_CHAT,"");
         promptsList.put("Example","Write a similar example");
         promptsList.put("Explain","Explain this code");
-
-        promptsListBak = new LinkedHashMap<>();
-        promptsListBak.put(GlobalDataEntity_CHAT,"");
-        promptsListBak.put("Example","Write a similar example");
-        promptsListBak.put("Explain","Explain this code");
+        promptsListBak.putAll(promptsList);
     }
 
     public String getProxy() {
@@ -63,14 +57,6 @@ public class GlobalDataEntity implements Serializable {
 
     public void setGlobalDialogText(String globalDialogText) {
         this.globalDialogText = globalDialogText;
-    }
-
-    public int getMaxNum() {
-        return maxNum;
-    }
-
-    public void setMaxNum(int maxNum) {
-        this.maxNum = maxNum;
     }
 
     public boolean isSharePrompts() {

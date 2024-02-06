@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public class DialogEntity implements Serializable {
     private String role;
-    private String content="";
+    private String content = "";
 
     public DialogEntity() {
     }

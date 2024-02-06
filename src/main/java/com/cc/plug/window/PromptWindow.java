@@ -17,22 +17,18 @@ public class PromptWindow {
     private JButton addButton;
     private JTextArea contentText;
     private JButton resetButton;
-
-    private static int num = 0;
-
-    {
-        promptsTable.setModel(D.tableModel);
-        promptsTable.setEnabled(true);
-        if (num++ == 0){
-            loadPrompts(D.globalDataEntity.getPromptsList());
-        }
-    }
-
     public JPanel getPromptJPanel() {
         return promptJPanel;
     }
 
+    private static boolean firstLoad = true;
     public PromptWindow() {
+        promptsTable.setModel(D.tableModel);
+        promptsTable.setEnabled(true);
+        if (firstLoad){
+            firstLoad = false;
+            loadPrompts(D.globalDataEntity.getPromptsList());
+        }
         addButton.addActionListener(e -> {
             String name = nameText.getText();
             String content = contentText.getText();
@@ -48,7 +44,7 @@ public class PromptWindow {
 
         resetButton.addActionListener(e -> {
             D.globalDataEntity.getPromptsList().clear();
-            D.tableModel.setDataVector(null, PROMPTS_HEAD);
+            D.tableModel.setDataVector(new Object[][]{{PROMPTS_HEAD[0], PROMPTS_HEAD[1]}}, PROMPTS_HEAD);
             loadPrompts(D.globalDataEntity.getPromptsListBak());
             ChatFactory.chatWindow.initPromptsBox();
             globalToFile();
